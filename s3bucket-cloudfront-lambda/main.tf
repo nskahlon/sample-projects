@@ -20,3 +20,13 @@ module "intact_cf_distribution" {
   cf_aliases         = ["dev-project-images.cs.idc.com", "dev-project-images.idc-cs-assessment.com"]
   oac_name           = module.intact_s3_bucket.name
 }
+module "lambda_role" {
+  source = "./modules/iam"
+  rolename = "lambda_execution_role"  
+}
+
+module "lambda_function" {
+  source = "./modules/lambda"
+  function_name = "lambda_function" 
+  lambda_role_name = module.lambda_role.lambda_role_arn 
+}
